@@ -1,2 +1,5 @@
 # lazy-sysadmin
-Some scripts to ease if someone is working as I used to the past
+Become a sysadmin whois technically active and physically lazy!!!
+
+Get Desired ubuntu AMI from:
+https://cloud-images.ubuntu.com/locator/ec2/
