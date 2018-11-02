@@ -1,0 +1,28 @@
+---
+#spin server in previously created seecurity group
+- name: Spinning up {{project}} server
+  ec2:
+    key_name: "{{ aws_ec2_keypair }}"
+    profile: "{{ aws_profile }}"
+    group:  "{{ project }}"
+    user_data: "{{ lookup('file', '{{ aws_ec2_userdata }}') }}"
+    instance_tags:
+      Name: "{{ project }}"
+    image: "{{ aws_ec2_ami_id }}"
+    instance_type: "{{ aws_ec2_instance_type }}"
+    region: "{{ aws_region }}"
+    zone: "{{ aws_zone }}"
+    wait: yes
+    instance_profile_name: "{{ aws_ec2_iam_profile }}"
+  register: aws_ec2_instances
+  tags:
+    - create_ec2
+
+- name: Temporary assignment into hostgroup
+  add_host:
+    hostname: "{{ aws_ec2_instances.instances[0].private_ip }}:{{ssh_port}}"
+    groups: aws_ec2_instance
+    ansible_ssh_private_key_file: "{{ ssh_private_key_file_location }}"
+    ansible_ssh_user: "{{ aws_default_ssh_user }}"
+    instance_id: "{{ aws_ec2_instances.instances[0].id }}"
+  when: "{{ aws_ec2_instances.instances }}"

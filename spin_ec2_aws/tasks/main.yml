@@ -1,2 +1,5 @@
 ---
 # tasks file for spin_ec2_aws
+- include: prepare_userdata.yml
+- include: create_security_group.yml
+- include: spin_server.yml
