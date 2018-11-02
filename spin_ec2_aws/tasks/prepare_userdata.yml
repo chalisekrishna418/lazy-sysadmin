@@ -1,0 +1,6 @@
+---
+- name: Prepare userdata for {{ project }}
+  template:
+     src: templates/userdata.j2
+     dest: userdata
+  delegate_to: localhost

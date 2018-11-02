@@ -1,0 +1,11 @@
+#creates Security group for EC2
+- name: Creating Security Group {{ project }} for {{ project }} instance
+  ec2_group:
+    name: "{{ project }}"
+    description: "Security Group for {{ project }}"
+    profile: "{{ aws_profile }}"
+    region: "{{ aws_region }}"
+    state: present
+    tags:
+        Name: "{{ project }}"
+    rules: "{{ ec2_firewall_rules }}"

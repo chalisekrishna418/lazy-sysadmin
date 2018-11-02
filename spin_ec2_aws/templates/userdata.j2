@@ -1,0 +1,5 @@
+#!/bin/bash
+
+apt-get -y update
+apt-get -y upgrade
+sed -i  's/^\(Port\) \([0-9]*\)/\1 {{ssh_port}}/g' /etc/ssh/sshd_config && systemctl restart sshd

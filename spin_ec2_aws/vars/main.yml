@@ -1,2 +1,26 @@
 ---
 # vars file for spin_ec2_aws
+
+###vars for spin_server.yml###
+aws_profile: default
+aws_ec2_keypair: "krishna.chalise"
+aws_ec2_userdata: "userdata"
+aws_ec2_instance_type: 'm1.small'
+aws_region: "ap-southeast-2"
+aws_zone: "ap-southeast-2a"
+aws_ec2_iam_profile: "some-iam-role"
+ssh_port: "22"
+ssh_private_key_file_location: "~/.ssh/id_rsa"
+aws_default_ssh_user: "ubuntu"
+aws_ec2_ami_id: "ami-03d47d045f69d1dcd"
+
+###vars for create_security_group.yml###
+ec2_firewall_rules:
+  - proto: tcp
+    from_port: 80
+    to_port: 80
+    cidr_ip: 0.0.0.0/0
+  - proto: tcp
+    from_port: "{{ ssh_port }}"
+    to_port: "{{ ssh_port }}"
+    cidr_ip: 0.0.0.0/0

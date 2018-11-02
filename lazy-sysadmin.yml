@@ -1,0 +1,8 @@
+---
+- name: Prepares infrastructure for your project
+  hosts: localhost
+  connection: local
+  vars:
+    - project: "{{ project }}"
+  roles:
+    - role: spin_ec2_aws
