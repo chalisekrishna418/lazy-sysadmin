@@ -1,2 +1,16 @@
 ---
 # tasks file for lamp
+- name: install basic lamp utils
+  apt:
+    name: "{{ basic_lamp_utils }}"
+    update_cache: true
+    state: present
+
+- include: configure_apache.yml
+
+- name: install some php modules
+  apt:
+    name: "{{ php_modules }}"
+    state: present
+
+- include: configure_mysql.yml

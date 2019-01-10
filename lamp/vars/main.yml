@@ -1,2 +1,22 @@
 ---
 # vars file for lamp
+basic_lamp_utils:
+  - apache2
+  - php
+  - mysql-server
+  - python-mysqldb
+
+services:
+  - apache2
+  - mysql
+
+php_modules:
+  - libapache2-mod-php
+  - php-mcrypt
+  - php-mbstring
+  - php-mysql
+  - php-bcmath
+  - php-zip
+  - php-ctype
+  - php-xml
+  - php-json

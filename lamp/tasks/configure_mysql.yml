@@ -1,0 +1,14 @@
+- name: start mysql service
+  service:
+    name: mysql
+    state: restarted
+
+- name: set mysql password for root
+  mysql_user:
+    name: root
+    password: "testpwd123"
+
+- name: start mysql password
+  service:
+    name: mysql
+    state: restarted
