@@ -1,0 +1,42 @@
+{% if ssl %}
+<VirtualHost *:80>
+        ServerName {{ url }}
+        Redirect 301 / https://www.{{ url }}
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerAdmin devops@{{ url }}
+    ServerName {{ url }}
+    ServerAlias www.{{ url }}
+    DocumentRoot /var/www/{{ url }}/public_html/
+    ErrorLog ${APACHE_LOG_DIR}/{{ url }}_ssl_error.log
+    CustomLog ${APACHE_LOG_DIR}/{{ url }}_ssl_access.log combined
+    SSLEngine on
+    SSLCertificateFile /etc/ssl/certs/ssl_certificate.crt
+    SSLCertificateKeyFile /etc/ssl/csr/{{ url }}.key
+    SSLCertificateChainFile /etc/ssl/certs/IntermediateCA.crt
+    <Directory /var/www/{{ url }}/public_html/>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    </Directory>
+</VirtualHost>
+{% endif %}
+
+{% if ssl != 'true' %}
+<VirtualHost *:80>
+    ServerAdmin devops@{{ url }}
+    ServerName {{ url }}
+    ServerAlias www.{{ url }}
+    DocumentRoot /var/www/{{ url }}/public_html/
+    ErrorLog ${APACHE_LOG_DIR}/{{ url }}_error.log
+    CustomLog ${APACHE_LOG_DIR}/{{ url }}_access.log combined
+    <Directory /var/www/{{ url }}/public_html/>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    </Directory>
+</VirtualHost>
+{% endif %}

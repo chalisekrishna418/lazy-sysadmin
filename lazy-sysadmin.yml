@@ -1,8 +1,21 @@
 ---
 - name: Prepares infrastructure for your project
-  hosts: localhost
-  connection: local
+  hosts: all
   vars:
-    - project: "{{ project }}"
+    - url: "{{ url }}"
+  pre_tasks:
+    - name: install python
+      apt:
+        name: 
+          - python-minimal
+          - PyMySQL
+        state: present
+        update-cache: yes 
   roles:
     - role: spin_ec2_aws
+      tags:
+        - spin_ec2
+
+    - role: lamp
+      tags:
+        - configure_lamp
