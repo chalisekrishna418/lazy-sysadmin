@@ -7,6 +7,8 @@
     state: present
 
 - include: configure_apache.yml
+  tags:
+    - apache2
 
 - name: install some php modules
   apt:
@@ -14,3 +16,5 @@
     state: present
 
 - include: configure_mysql.yml
+  tags:
+    - mysql

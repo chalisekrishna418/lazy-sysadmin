@@ -1,3 +1,4 @@
 ---
 # defaults file for lamp
 ssl: false
+UBUNTU_USER: ubuntu

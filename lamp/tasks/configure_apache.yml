@@ -2,22 +2,9 @@
   service:
     name: apache2
     state: started
-
-- name: configure apache2 vhost
-  template:
-    src: vhost.j2
-    dest: "/etc/apache2/sites-available/{{ url }}.conf"
     
 - name: disable default vhost
   command: a2dissite 000-default.conf
-
-- name: enable the current site
-  command: "a2ensite {{ url }}.conf"
-
-- name: "create document root for {{ url }}"
-  file:
-    path: /var/www/{{ url }}/public_html/
-    state: directory
 
 - name: reload apache2 service
   service:

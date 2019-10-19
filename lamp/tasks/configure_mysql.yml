@@ -1,14 +1,33 @@
-- name: start mysql service
+- name: install mysql-server via apt
+  apt:
+    name: mysql-server
+    state: present
+
+- name: enable and restart mysql service
   service:
     name: mysql
-    state: restarted
+    enabled: yes
+    state: started
 
-- name: set mysql password for root
-  mysql_user:
+- name: generate mysql password for root user
+  set_fact:
+    mysql_password: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
+
+- name: echo mysql passwords
+  debug:
+    msg: "{{ mysql_password }}"
+
+- name: create root user cnf file
+  template:
+    src: root.j2
+    dest: "/root/.my.cnf"
+
+- name: update mysql root password
+  mysql_user: 
     name: root
-    password: "testpwd123"
-
-- name: start mysql password
-  service:
-    name: mysql
-    state: restarted
+    host: "localhost" 
+    password: "{{ mysql_password }}"
+    login_user: root
+    login_password: "{{ mysql_password }}"
+    check_implicit_admin: yes
+    priv: "*.*:ALL,GRANT"
